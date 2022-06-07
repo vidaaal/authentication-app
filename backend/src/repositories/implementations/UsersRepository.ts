@@ -4,7 +4,7 @@ import { CreateUserDTO } from '../../dtos/CreateUserDTO';
 import { User } from '../../entities/User';
 import { IUsersRepository } from '../IUsersRepository';
 
-class UserRepository implements IUsersRepository {
+class UsersRepository implements IUsersRepository {
   private ormRepository: Repository<User>;
 
   constructor() {
@@ -28,4 +28,4 @@ class UserRepository implements IUsersRepository {
   }
 }
 
-export { UserRepository };
+export { UsersRepository };

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
+import { User } from '../../entities/User';
 
 import { IUsersRepository } from '../../repositories/IUsersRepository';
 
@@ -15,6 +16,11 @@ interface IUserResponse {
   bio: string;
 }
 
+interface IResponse {
+  token: string;
+  user: User;
+}
+
 class AuthWithGithubUseCase {
   private usersRepository: IUsersRepository;
 
@@ -22,7 +28,7 @@ class AuthWithGithubUseCase {
     this.usersRepository = usersRepository;
   }
 
-  async execute(code: string) {
+  async execute(code: string): Promise<IResponse> {
     const url = 'https://github.com/login/oauth/access_token';
 
     const CLIENT_ID = process.env.GITHUB_CLIENT_ID;

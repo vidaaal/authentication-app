@@ -6,8 +6,10 @@ class User {
   @PrimaryColumn('uuid')
   id: string;
 
-  @Column()
-  name: string;
+  @Column({
+    nullable: true,
+  })
+  name?: string;
 
   @Column({
     unique: true,
@@ -35,6 +37,12 @@ class User {
   constructor() {
     if (!this.id) {
       this.id = uuid();
+    }
+
+    const avatar_url = 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png';
+
+    if (!this.avatar) {
+      this.avatar = avatar_url;
     }
   }
 }

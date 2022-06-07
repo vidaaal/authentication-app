@@ -1,17 +1,17 @@
 import { Request, Response } from 'express';
-import { UserRepository } from '../../repositories/implementations/UsersRepository';
+import { UsersRepository } from '../../repositories/implementations/UsersRepository';
 
 import { AuthWithGithubUseCase } from './AuthWithGithubUseCase';
 
 class AuthWithGithubController {
-  async handle(request: Request, response: Response) {
+  async handle(request: Request, response: Response): Promise<Response> {
     const { code } = request.body;
 
-    const authWithGithubUseCase = new AuthWithGithubUseCase(new UserRepository());
+    const authWithGithubUseCase = new AuthWithGithubUseCase(new UsersRepository());
 
     const authResponse = await authWithGithubUseCase.execute(code);
 
-    response.json(authResponse);
+    return response.json(authResponse);
   }
 }
 
