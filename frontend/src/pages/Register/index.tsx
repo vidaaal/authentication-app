@@ -14,13 +14,13 @@ import { useAuth } from '../../contexts/AuthContext';
 
 import * as S from './styles';
 
-export function Login() {
+export function Register() {
   const { handleSubmit, register } = useForm();
 
-  const { signIn, signInWithGithubUrl } = useAuth();
+  const { signUp, signInWithGithubUrl } = useAuth();
 
-  async function handleSignIn(data: any) {
-    await signIn(data);
+  async function handleCreateUser(data: any) {
+    await signUp(data);
   }
 
   return (
@@ -30,9 +30,18 @@ export function Login() {
           <img src={Logo} alt="devchallenges" />
         </div>
 
-        <h3>Login</h3>
+        <div className="headerInfo">
+          <h3>
+            Join thousands of learners from around the world
+          </h3>
 
-        <form onSubmit={handleSubmit(handleSignIn)}>
+          <p>
+            Master web development by making real-life projects.
+            There are multiple paths for you to choose
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit(handleCreateUser)}>
           <S.FormGroup>
             <div className="formInput">
               <Input
@@ -56,7 +65,7 @@ export function Login() {
           <S.Actions>
             <S.SubmitButton>
               <Button type="submit">
-                Login
+                Start coding now
               </Button>
             </S.SubmitButton>
 
@@ -85,10 +94,10 @@ export function Login() {
 
             <div className="registerLink">
               <p>
-                Don’t have an account yet?
+                Already a member?
                 {' '}
-                <Link to="/register">
-                  Register
+                <Link to="/login">
+                  Login
                 </Link>
               </p>
             </div>

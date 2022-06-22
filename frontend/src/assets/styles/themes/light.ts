@@ -8,7 +8,8 @@ export const light = {
       link: '#2F80ED',
     },
     input: {
-      primary: '#828282',
+      primary: '#333',
+      secondary: '#828282',
       placeholder: '#BDBDBD',
       iconPrimary: '#828282',
     },

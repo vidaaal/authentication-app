@@ -8,9 +8,9 @@ class CreateUserController {
 
     const createUserUseCase = new CreateUserUseCase(new UsersRepository());
 
-    await createUserUseCase.execute({ email, password });
+    const createUserResponse = await createUserUseCase.execute({ email, password });
 
-    return response.sendStatus(200);
+    return response.sendStatus(201);
   }
 }
 

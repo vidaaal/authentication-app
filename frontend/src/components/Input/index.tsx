@@ -1,4 +1,6 @@
-import { ReactNode, InputHTMLAttributes } from 'react';
+import {
+  ReactNode, InputHTMLAttributes, forwardRef, ForwardRefRenderFunction,
+} from 'react';
 import * as S from './styles';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -7,26 +9,26 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   id: string;
 }
 
-export function Input({
+const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = ({
   leftIcon, label, id, ...rest
-}: InputProps) {
-  return (
-    <S.Container>
-      {label && (
-        <S.LabelWrapper>
-          <label htmlFor={id}>{label}</label>
-        </S.LabelWrapper>
+}, ref) => (
+  <S.Container>
+    {label && (
+      <S.LabelWrapper>
+        <label htmlFor={id}>{label}</label>
+      </S.LabelWrapper>
+    )}
+
+    <S.Wrapper>
+      {leftIcon && (
+        <label htmlFor={id}>
+          {leftIcon}
+        </label>
       )}
 
-      <S.Wrapper>
-        {leftIcon && (
-          <label htmlFor={id}>
-            {leftIcon}
-          </label>
-        )}
+      <S.Input id={id} autoComplete="off" {...rest} ref={ref} />
+    </S.Wrapper>
+  </S.Container>
+);
 
-        <S.Input id={id} {...rest} />
-      </S.Wrapper>
-    </S.Container>
-  );
-}
+export const Input = forwardRef(InputBase);

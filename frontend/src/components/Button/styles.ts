@@ -12,6 +12,9 @@ export const Button = styled.button<{ isEdit?: boolean }>`
   align-items: center;
   justify-content: center;
   color: ${({ theme }) => theme.colors.button.primaryText};
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: -0.035em;
 
   ${({ isEdit }) => isEdit && css`
     border: 1px solid ${({ theme }) => theme.colors.button.border};

@@ -2,9 +2,9 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
+  height: 100vh;
   padding: 0 18px;
   display: flex;
-  height: 100vh;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -50,6 +50,13 @@ export const Wrapper = styled.main`
   @media (max-width: 600px) {
     padding: 0;
     border: 0;
+  }
+
+  .headerInfo {
+    h3 {
+      font-size: 1.125rem;
+      margin-bottom: 14px;
+    }
   }
 `;
 

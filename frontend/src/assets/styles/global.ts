@@ -9,11 +9,14 @@ export default createGlobalStyle`
 
   body {
     background: ${({ theme }) => theme.colors.background};
-    font-family: 'Noto Sans', sans-serif;
-    font-size: 1rem;
     
     a {
       text-decoration: none;
     }
+  }
+
+  body, input, button {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 1rem;
   }
 `;

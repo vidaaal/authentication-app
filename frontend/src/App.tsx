@@ -5,6 +5,7 @@ import { AppRoutes } from './routes';
 import themes from './assets/styles/themes';
 
 import GlobalStyles from './assets/styles/global';
+import { AuthProvider } from './contexts/AuthContext';
 
 function App() {
   const [theme] = useState('light');
@@ -15,12 +16,14 @@ function App() {
 
   return (
     <BrowserRouter>
-      <ThemeProvider theme={currentTheme}>
-        <GlobalStyles />
+      <AuthProvider>
+        <ThemeProvider theme={currentTheme}>
+          <GlobalStyles />
 
-        <AppRoutes />
-      </ThemeProvider>
+          <AppRoutes />
+        </ThemeProvider>
 
+      </AuthProvider>
     </BrowserRouter>
   );
 }

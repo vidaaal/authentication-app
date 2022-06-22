@@ -21,7 +21,7 @@ interface IResponse {
   user: User;
 }
 
-class AuthWithGithubUseCase {
+class AuthWithFacebookUseCase {
   private usersRepository: IUsersRepository;
 
   constructor(usersRepository: IUsersRepository) {
@@ -31,8 +31,8 @@ class AuthWithGithubUseCase {
   async execute(code: string): Promise<IResponse> {
     const url = 'https://github.com/login/oauth/access_token';
 
-    const CLIENT_ID = process.env.GITHUB_CLIENT_ID;
-    const CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
+    const CLIENT_ID = process.env.TWITTER_API_KEY;
+    const CLIENT_SECRET = process.env.TWITTER_API_KEY_SECRET;
     const { JWT_SECRET } = process.env;
 
     const { data: accessTokenResponse } = await axios.post<IAccessTokenResponse>(url, null, {
@@ -80,4 +80,4 @@ class AuthWithGithubUseCase {
   }
 }
 
-export { AuthWithGithubUseCase };
+export { AuthWithFacebookUseCase };

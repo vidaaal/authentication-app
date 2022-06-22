@@ -25,6 +25,10 @@ class AuthWithCredentials {
   async execute({ email, password }: IRequest): Promise<IResponse> {
     const { JWT_SECRET } = process.env;
 
+    if (!email || !password) {
+      throw new AppError('Missing credentials');
+    }
+
     const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {
@@ -41,7 +45,7 @@ class AuthWithCredentials {
       throw new AppError('Email or password incorrect');
     }
 
-    const token = jwt.sign({ user }, JWT_SECRET as string, {
+    const token = jwt.sign({ user: user.id }, JWT_SECRET as string, {
       expiresIn: '1d',
     });
 

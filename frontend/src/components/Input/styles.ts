@@ -39,8 +39,9 @@ export const Input = styled.input`
   border: 0;
   outline: 0;
   color: ${({ theme }) => theme.colors.input.primary};
+  border-radius: 0 8px 8px 0;
 
   ::placeholder {
-    color: ${({ theme }) => theme.colors.input.primary};
+    color: ${({ theme }) => theme.colors.input.secondary};
   }
 `;

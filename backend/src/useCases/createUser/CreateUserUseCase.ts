@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import { User } from '../../entities/User';
 
 import { AppError } from '../../errors/AppError';
@@ -9,6 +10,11 @@ interface IRequest {
   password: string;
 }
 
+interface IResponse {
+  token: string;
+  user: User;
+}
+
 class CreateUserUseCase {
   private usersRepository: IUsersRepository;
 
@@ -17,6 +23,8 @@ class CreateUserUseCase {
   }
 
   async execute({ email, password }: IRequest): Promise<void> {
+    const { JWT_SECRET } = process.env;
+
     const userAlreadyExists = await this.usersRepository.findByEmail(email);
 
     if (userAlreadyExists) {
