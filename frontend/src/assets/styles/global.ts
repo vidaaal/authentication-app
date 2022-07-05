@@ -19,4 +19,9 @@ export default createGlobalStyle`
     font-family: 'Noto Sans', sans-serif;
     font-size: 1rem;
   }
+
+  button, a {
+    cursor: pointer;
+    outline: none;
+  }
 `;

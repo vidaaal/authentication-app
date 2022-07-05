@@ -45,7 +45,7 @@ class AuthWithCredentials {
       throw new AppError('Email or password incorrect');
     }
 
-    const token = jwt.sign({ user: user.id }, JWT_SECRET as string, {
+    const token = jwt.sign({ id: user.id }, JWT_SECRET as string, {
       expiresIn: '1d',
     });
 

@@ -6,6 +6,11 @@ export const Container = styled.div`
 `;
 
 export const LabelWrapper = styled.div`
+  margin-bottom: 4px;
+  color: ${({ theme }) => theme.colors.input.label};
+  font-size: 0.813rem;
+  font-size: 300;
+  width: 100%;
 `;
 
 export const Wrapper = styled.div`
@@ -39,9 +44,11 @@ export const Input = styled.input`
   border: 0;
   outline: 0;
   color: ${({ theme }) => theme.colors.input.primary};
-  border-radius: 0 8px 8px 0;
+  border-radius: 8px;
+  font-size: 0.875rem;
 
   ::placeholder {
-    color: ${({ theme }) => theme.colors.input.secondary};
+    color: ${({ theme }) => theme.colors.input.placeholder};
+    font-weight: 500;
   }
 `;

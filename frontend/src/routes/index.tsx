@@ -1,11 +1,15 @@
 import { Routes, Route } from 'react-router-dom';
-import { Dashboard } from '../pages/Dashboard';
+import { Profile } from '../pages/Profile';
 import { Login } from '../pages/Login';
 import { Register } from '../pages/Register';
 import { GuestRoute } from './GuestRoute';
 import { PrivateRoute } from './PrivateRoute';
+import { ProfileEdit } from '../pages/Profile/Edit';
 
 const guestRoutes = [
+  {
+    path: '/',
+  },
   {
     path: '/login',
     element: <Login />,
@@ -18,8 +22,12 @@ const guestRoutes = [
 
 const privateRoutes = [
   {
-    path: '/dashboard',
-    element: <Dashboard />,
+    path: '/profile',
+    element: <Profile />,
+  },
+  {
+    path: '/profile/edit',
+    element: <ProfileEdit />,
   },
 ];
 

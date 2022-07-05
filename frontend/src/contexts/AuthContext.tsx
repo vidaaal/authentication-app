@@ -13,6 +13,7 @@ interface IUser {
   name?: string;
   email: string;
   bio?: string;
+  phone?: string;
   avatar?: string;
   isSocialAuth?: boolean;
 }
@@ -30,7 +31,8 @@ interface IAuthCredentials {
 interface IAuthContext {
   signUp: (data: IAuthCredentials) => Promise<void>;
   signIn: (data: IAuthCredentials) => Promise<void>;
-  user: IUser;
+  signOut: () => void;
+  user: IUser | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   signInWithGithubUrl: string;
@@ -39,7 +41,7 @@ interface IAuthContext {
 const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<IUser>();
+  const [user, setUser] = useState<IUser | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -49,18 +51,27 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const signInWithGithubUrl = `https://github.com/login/oauth/authorize?scope=user:email&client_id=${GITHUB_CLIENT_ID}`;
 
   useEffect(() => {
-    const token = localStorage.getItem('authentication-app.token');
+    (async () => {
+      const token = localStorage.getItem('authentication-app.token');
 
-    if (token) {
-      setIsAuthenticated(true);
-      api.defaults.headers.common.Authorization = `Bearer ${token}`;
-    }
-    setIsLoading(false);
+      if (token) {
+        try {
+          api.defaults.headers.common.Authorization = `Bearer ${token}`;
+
+          const userOnRefresh = await api.get('/user');
+          setUser(userOnRefresh.data);
+          setIsAuthenticated(true);
+        } catch {
+          signOut();
+        }
+      }
+      setIsLoading(false);
+    })();
   }, []);
 
   const signUp = useCallback(async ({ email, password }: IAuthCredentials) => {
     try {
-      await api.post('/users/create', {
+      await api.post('/user/create', {
         email,
         password,
       });
@@ -70,12 +81,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
         password,
       });
 
-      localStorage.setItem('authentication-app.token', JSON.stringify(token));
+      localStorage.setItem('authentication-app.token', token);
       api.defaults.headers.common.Authorization = `Bearer ${token}`;
       setUser(userData);
       setIsAuthenticated(true);
 
-      navigate('/dashboard');
+      navigate('/profile');
     } catch (err: any) {
       console.log(err.response.data);
     }
@@ -88,12 +99,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
         password,
       });
 
-      localStorage.setItem('authentication-app.token', JSON.stringify(token));
+      localStorage.setItem('authentication-app.token', token);
       api.defaults.headers.common.Authorization = `Bearer ${token}`;
       setUser(userData);
       setIsAuthenticated(true);
 
-      navigate('/dashboard');
+      navigate('/profile');
     } catch (err: any) {
       console.log(err.response.data);
     }
@@ -105,12 +116,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
         code: githubCode,
       });
 
-      localStorage.setItem('authentication-app.token', JSON.stringify(token));
+      localStorage.setItem('authentication-app.token', token);
       api.defaults.headers.common.Authorization = `Bearer ${token}`;
       setUser(userData);
       setIsAuthenticated(true);
 
-      navigate('/dashboard');
+      navigate('/profile');
     } catch (err: any) {
       console.log(err.response.data);
     }
@@ -127,10 +138,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }, []);
 
+  const signOut = useCallback(() => {
+    localStorage.removeItem('authentication-app.token');
+    api.defaults.headers.common.Authorization = '';
+    setUser(null);
+    setIsAuthenticated(false);
+    navigate('/login');
+  }, []);
+
   const contextValue = useMemo(
     () => ({
       signUp,
       signIn,
+      signOut,
       user,
       isAuthenticated,
       isLoading,

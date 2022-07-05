@@ -99,7 +99,6 @@ export const SocialLogins = styled.div`
   a {
     background: none;
     border: 0;
-    cursor: pointer;
     width: 42px;
     height: 42px;
 

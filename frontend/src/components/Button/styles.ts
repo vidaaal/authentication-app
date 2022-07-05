@@ -7,7 +7,6 @@ export const Button = styled.button<{ isEdit?: boolean }>`
   border: 0;
   background: ${({ theme }) => theme.colors.button.background};
   border-radius: 8px;
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;

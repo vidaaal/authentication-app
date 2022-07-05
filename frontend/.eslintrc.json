@@ -51,7 +51,8 @@
     "react/jsx-props-no-spreading": "off",
     "react/function-component-definition": "off",
     "no-unused-vars": "off",
-    "react/jsx-no-useless-fragment": "off"
+    "react/jsx-no-useless-fragment": "off",
+    "react/jsx-no-bind": "off"
   },
   "settings": {
     "import/resolver": {

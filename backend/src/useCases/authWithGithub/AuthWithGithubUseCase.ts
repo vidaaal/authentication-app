@@ -71,7 +71,7 @@ class AuthWithGithubUseCase {
     delete user.password;
 
     const token = jwt.sign({
-      user: user.id,
+      id: user.id,
     }, JWT_SECRET as string, {
       expiresIn: '1d',
     });

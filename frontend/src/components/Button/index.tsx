@@ -7,8 +7,10 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export function Button({ children, isEdit, ...rest }: ButtonProps) {
+  const { type = 'button' } = { ...rest };
+
   return (
-    <S.Button isEdit={isEdit} {...rest}>
+    <S.Button isEdit={isEdit} {...rest} type={type}>
       {children}
     </S.Button>
   );
